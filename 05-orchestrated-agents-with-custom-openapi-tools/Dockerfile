@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
-COPY aci_requirements.txt .
+COPY 05-orchestrated-agents-with-custom-openapi-tools/aci_requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r aci_requirements.txt
