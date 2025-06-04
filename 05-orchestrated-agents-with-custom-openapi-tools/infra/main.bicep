@@ -24,12 +24,14 @@ param gitHubRepoBranch string = 'main'
 @description('Dockerfile path relative to the repository root.')
 param dockerfilePath string = '05-orchestrated-agents-with-custom-openapi-tools/Dockerfile'
 
-
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${abbrs.resourcesResourceGroup}-${rgName}'
   location: location
   tags: tags
 }
+
+var resourceGroupName = resourceGroup.name
+var randomSuffix = uniqueString(subscription().id, resourceGroupName, environmentName)
 
 
 var uniqueId = uniqueString(resourceGroup.id)
@@ -52,7 +54,7 @@ module uami 'modules/uami.bicep' = {
   scope: resourceGroup
   params: {
     uniqueId: uniqueId
-    prefix: 'agents-fast-'
+    prefix: 'afa-${randomSuffix}-'
     location: location
   }
 }
@@ -63,7 +65,7 @@ module monitoring 'modules/monitoring.bicep' = {
   params: {
     location: location
     tags: tags
-    logAnalyticsName: '${abbrs.logAnalyticsWorkspace}-${take(environmentName, 10)}'
+    logAnalyticsName: '${abbrs.logAnalyticsWorkspace}-${take(environmentName, 10)}-${randomSuffix}'
     userAssignedIdentityPrincipalId: uami.outputs.principalId
   }
 }
@@ -74,7 +76,7 @@ module registry 'modules/container-registry.bicep' = {
   params: {
     location: location
     tags: tags
-    containerRegistryName: '${abbrs.containerRegistry}${environmentName}'
+    containerRegistryName: '${abbrs.containerRegistry}${environmentName}${randomSuffix}'
     userAssignedIdentityPrincipalId: uami.outputs.principalId
   }
 }
@@ -85,7 +87,7 @@ module containerApps 'modules/container-apps.bicep' = {
   params: {
     location: location
     tags: tags
-    containerAppsEnvironmentName: '${abbrs.containerAppsEnvironment}-${environmentName}'
+    containerAppsEnvironmentName: '${abbrs.containerAppsEnvironment}-${environmentName}-${randomSuffix}'
     logAnalyticsWorkspaceName: monitoring.outputs.logAnalyticsWorkspaceName
   }
 }
@@ -119,7 +121,7 @@ module app 'modules/app.bicep' = {
     containerRegistryServer: registry.outputs.loginServer
     imageName: 'agents-fast-plugins:latest'
     targetPort: 80
-    containerAppName: '${abbrs.containerApp}-${environmentName}'
+    containerAppName: '${abbrs.containerApp}-${environmentName}-${randomSuffix}'
     userAssignedIdentityPrincipalId: uami.outputs.identityId
   }
   dependsOn: [
