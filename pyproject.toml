@@ -23,6 +23,7 @@ dependencies = [
     "azure-ai-agents",
     "azure-core",    
     "azure-identity",
+    "azure-mgmt-logic",
     "azure-monitor-opentelemetry",
     "opentelemetry-sdk",
     "azure-core-tracing-opentelemetry",
