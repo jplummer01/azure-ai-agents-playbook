@@ -15,7 +15,7 @@ COPY 05-orchestrated-agents-with-custom-openapi-tools/aci_requirements.txt .
 RUN pip install --no-cache-dir -r aci_requirements.txt
 
 # Copy the FastAPI application
-COPY bank_transactions_api.py .
+COPY 05-orchestrated-agents-with-custom-openapi-tools/bank_transactions_api.py .
 
 # Expose the port the app runs on
 EXPOSE 80
