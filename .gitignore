@@ -175,4 +175,3 @@ cython_debug/
 do_not_commit/
 xtest.*
 scenarios.md
-04.3-logic_apps_hybrid_tutorial.ipynb

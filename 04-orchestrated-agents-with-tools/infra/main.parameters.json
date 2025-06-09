@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "value":  "${AZURE_ENVIRONMENT_NAME=agentfastapi}"
+    },
+    "rgName": {
+      "value":  "${AZURE_RESOURCE_GROUP=agents-fast-api-v1}"
+    },
+    "location": {
+      "value": "${AZURE_RG_LOCATION=swedencentral}"
+    },
+    "outlookConnectionResourceGroup": {
+      "value": "${OUTLOOK_CONNECTION_RG=rg-agents-fast-api-v1}"
+    },
+    "outlookConnectionName": {
+      "value": "${OUTLOOK_CONNECTION_NAME=outlook}"
+    }
+  }
+}
+
+
+
