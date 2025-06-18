@@ -2,6 +2,8 @@ semantic-kernel
 requests
 notebook
 ipykernel
+nbconvert
+nbformat
 pandas
 openai
 python-dotenv

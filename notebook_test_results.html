@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notebook Test Results</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .summary { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .success { color: green; }
+        .failed { color: red; }
+        .error { color: orange; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>📊 Notebook Test Results</h1>
+    
+    <div class="summary">
+        <h2>Summary</h2>
+        <p><strong>Total notebooks:</strong> 14</p>
+        <p><strong>Successful:</strong> <span class="success">9</span></p>
+        <p><strong>Failed:</strong> <span class="failed">4</span></p>
+        <p><strong>Errors:</strong> <span class="error">1</span></p>
+        <p><strong>Total execution time:</strong> 2949.79 seconds</p>
+        <p><strong>Overall status:</strong> FAILED</p>
+    </div>
+    
+    <h2>Detailed Results</h2>
+    <table>
+        <tr>
+            <th>Notebook</th>
+            <th>Status</th>
+            <th>Execution Time (s)</th>
+            <th>Cells Executed</th>
+            <th>Error Message</th>
+        </tr>
+
+        <tr>
+            <td>01-agent-basics\01.1-azure_ai_agents_foundry_sdk_tutorial.ipynb</td>
+            <td class="failed">failed</td>
+            <td>45.46</td>
+            <td>0/13</td>
+            <td>An error occurred while executing the following cell:
+------------------
+# 🎯 YOUR TURN! Customize th...</td>
+        </tr>
+
+        <tr>
+            <td>01-agent-basics\01.2-azure_ai_agents_semantic_kernel_tutorial.ipynb</td>
+            <td class="success">success</td>
+            <td>136.73</td>
+            <td>17/17</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>01-agent-basics\01.3-python_with_statement_agents_tutorial.ipynb</td>
+            <td class="success">success</td>
+            <td>106.1</td>
+            <td>7/7</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>02-agent-custom-functions\02.1-azure_ai_agents_functions_foundry_sdk_tutorial.ipynb</td>
+            <td class="success">success</td>
+            <td>52.19</td>
+            <td>14/14</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>02-agent-custom-functions\02.2-azure_ai_agents_semantic_kernel_plugins_tutorial.ipynb</td>
+            <td class="success">success</td>
+            <td>66.12</td>
+            <td>9/9</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>03-orchestrated-agents\03.1-concurrent_and_sequential_orchestration_tutorial.ipynb</td>
+            <td class="error">error</td>
+            <td>1324.63</td>
+            <td>0/9</td>
+            <td>A cell timed out while it was being executed, after 600 seconds.
+The message was: Cell execution tim...</td>
+        </tr>
+
+        <tr>
+            <td>03-orchestrated-agents\03.2-connected_agents_tutorial.ipynb</td>
+            <td class="failed">failed</td>
+            <td>108.55</td>
+            <td>0/10</td>
+            <td>An error occurred while executing the following cell:
+------------------
+# Final cleanup - delete th...</td>
+        </tr>
+
+        <tr>
+            <td>04-orchestrated-agents-with-tools\04.1-openapi_currency_exchange_tutorial.ipynb</td>
+            <td class="success">success</td>
+            <td>75.28</td>
+            <td>10/10</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>04-orchestrated-agents-with-tools\04.2-hybrid_openapi_and_plugins_tutorial.ipynb</td>
+            <td class="success">success</td>
+            <td>109.39</td>
+            <td>9/9</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>04-orchestrated-agents-with-tools\04.3-logic_apps_hybrid_tutorial.ipynb</td>
+            <td class="failed">failed</td>
+            <td>23.33</td>
+            <td>0/12</td>
+            <td>An error occurred while executing the following cell:
+------------------
+# Test the Logic Apps agent...</td>
+        </tr>
+
+        <tr>
+            <td>05-orchestrated-agents-with-custom-openapi-tools\05.1-fastapi_openapi_tutorial.ipynb</td>
+            <td class="failed">failed</td>
+            <td>10.22</td>
+            <td>0/6</td>
+            <td>An error occurred while executing the following cell:
+------------------
+# Start the FastAPI service...</td>
+        </tr>
+
+        <tr>
+            <td>06-magentic-one-orchestration\06.1-magentic_creative_writing_tutorial.ipynb</td>
+            <td class="success">success</td>
+            <td>317.29</td>
+            <td>12/12</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>06-magentic-one-orchestration\06.2-magentic_bing_search_orchestration_tutorial.ipynb</td>
+            <td class="success">success</td>
+            <td>495.52</td>
+            <td>7/7</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>xtest.ipynb</td>
+            <td class="success">success</td>
+            <td>78.98</td>
+            <td>12/13</td>
+            <td></td>
+        </tr>
+
+    </table>
+</body>
+</html>

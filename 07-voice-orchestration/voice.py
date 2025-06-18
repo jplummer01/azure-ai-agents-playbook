@@ -21,6 +21,7 @@ from websockets.typing import Data
 from websockets.exceptions import WebSocketException
 from azure.identity import DefaultAzureCredential
 from azure.core.credentials_async import AsyncTokenCredential
+from azure.identity import DefaultAzureCredential
 
 logger = logging.getLogger(__name__)
 AUDIO_SAMPLE_RATE = 24000
@@ -126,6 +127,9 @@ class AsyncAzureVoiceLive:
         api_version: str | None = "2025-05-01-preview",
         api_key: str | None = None,
         azure_ad_token_credential: AsyncTokenCredential | None = None,
+        foundry_credential: AsyncTokenCredential | None = None,
+        project_name: str | None = None,
+        agent_id: str | None = None,
     ) -> None:
         if azure_endpoint is None:
             azure_endpoint = os.environ.get("AZURE_VOICE_LIVE_ENDPOINT")
@@ -150,10 +154,14 @@ class AsyncAzureVoiceLive:
 
         self._api_key = api_key
         self._azure_endpoint = azure_endpoint
+        self._project_name = project_name
+        self._agent_id = agent_id
         self._api_version = api_version
         self._azure_ad_token_credential = azure_ad_token_credential
+        self._foundry_credential = foundry_credential
         self._connection = None
         self._token = self.get_token() if azure_ad_token_credential else None
+        self._foundry_token = self.get_foundry_token() if foundry_credential else None
 
     def get_token(self) -> str:
         if self._azure_ad_token_credential:
@@ -162,11 +170,19 @@ class AsyncAzureVoiceLive:
             return token.token
         else:
             return None
+        
+    def get_foundry_token(self) -> str:
+        if self._foundry_credential:
+            scopes = "https://ai.azure.com"
+            token = self._foundry_credential.get_token(scopes)
+            return token.token
+        else:
+            return None        
 
     def refresh_token(self) -> None:
         self._token = self.get_token()
 
-    def connect(self, model: str) -> AsyncVoiceLiveConnection:
+    def connect(self, model: str, agent_id: str = None) -> AsyncVoiceLiveConnection:
         if self._connection is not None:
             raise ValueError("Already connected to the Azure Voice Agent service.")
         if not model:
@@ -174,11 +190,14 @@ class AsyncAzureVoiceLive:
         if not isinstance(model, str):
             raise TypeError(f"The 'model' parameter must be of type 'str', but got {type(model).__name__}.")
 
-        url = f"{self._azure_endpoint.rstrip('/')}/voice-agent/realtime?api-version={self._api_version}&model={model}"
-        url = url.replace("https://", "wss://")
 
-        auth_header = {"Authorization": f"Bearer {self._token}"} if self._token else {"api-key": self._api_key}
         request_id = uuid.uuid4()
+
+        url = f"{self._azure_endpoint.rstrip('/')}/voice-agent/realtime?api-version={self._api_version}&model={model}&agent_id={agent_id or self._agent_id}&agent-project-name={self._project_name}&agent_access_token={self._foundry_token}&Authorization=Bearer+{self._token}"
+        url = url.replace("https://", "wss://")
+        # print(f"Connecting to Azure Voice Agent at {url}")
+
+        auth_header = {"Authorization": f"Bearer {self._token}"} if self._token else {"api-key": self._api_key}        
         headers = {"x-ms-client-request-id": str(request_id), **auth_header}
 
         self._connection = AsyncVoiceLiveConnection(
@@ -186,6 +205,7 @@ class AsyncAzureVoiceLive:
             additional_headers=headers,
         )
         return self._connection
+
 
 # --- End of Embedded Code ---
 
@@ -268,6 +288,7 @@ async def receive_audio_and_playback(connection: AsyncVoiceLiveConnection) -> No
     logger.info("Starting audio playback ...")
     try:
         while True:
+            transcript = ""
             async for raw_event in connection:
                 try:
                     event = json.loads(raw_event)
@@ -278,10 +299,12 @@ async def receive_audio_and_playback(connection: AsyncVoiceLiveConnection) -> No
                 if event.get("type") == "response.audio.delta":
                     if event.get("item_id") != last_audio_item_id:
                         last_audio_item_id = event.get("item_id")
-
                     bytes_data = base64.b64decode(event.get("delta", ""))
                     audio_player.add_data(bytes_data)
+                elif event.get("type") == "response.audio_transcript.delta":
+                    transcript += event.get("delta", "")
                 elif event.get("type") == "response.done":
+                    print(f"Final Transcript: {transcript}")
                     break
     except (ConnectionResetError, WebSocketException) as e:
         logger.error(f"WebSocket error in audio playback: {e}")
@@ -301,58 +324,97 @@ async def read_keyboard_and_quit() -> None:
             break
 
 
-async def main() -> None:
-    endpoint = os.environ.get("AZURE_VOICE_LIVE_ENDPOINT")
-    deployment = os.environ.get("AZURE_VOICE_LIVE_DEPLOYMENT")
-    api_key = os.environ.get("AZURE_VOICE_LIVE_API_KEY")
 
-    if not endpoint or not deployment:
-        raise ValueError("Both AZURE_VOICE_LIVE_ENDPOINT and AZURE_VOICE_LIVE_DEPLOYMENT environment variables must be set.")
+
+class AgentVoice():
+
+    def __init__(self, 
+                agent_id: str = None, 
+                project_name: str = None,
+                endpoint: str = None,
+                deployment: str = None,
+                api_key: str = None
+            ) -> None:
+        
+        self.agent_id = agent_id or os.environ.get("AZURE_VOICE_LIVE_AGENT_ID") 
+        self.project_name = project_name or os.environ.get("AZURE_FOUNDRY_PROJECT_NAME") 
+
+        self.endpoint = endpoint or os.environ.get("AZURE_VOICE_LIVE_ENDPOINT")
+        self.deployment = deployment or os.environ.get("AZURE_VOICE_LIVE_DEPLOYMENT")
+        self.api_key = api_key or os.environ.get("AZURE_VOICE_LIVE_API_KEY")
+        print(f"Using agent_id: {self.agent_id}")
+
+        if not self.endpoint or not self.deployment:
+            raise ValueError("Both AZURE_VOICE_LIVE_ENDPOINT and AZURE_VOICE_LIVE_DEPLOYMENT environment variables must be set.")
     
-    client = AsyncAzureVoiceLive(
-        azure_endpoint = endpoint,
-        api_key = api_key,
-    )
-    async with client.connect(model = deployment) as connection:
-        await connection.session.update(
-            session={
-                "turn_detection": {
-                    "type": "azure_semantic_vad",
-                    "threshold": 0.3,
-                    "prefix_padding_ms": 200,
-                    "silence_duration_ms": 200,
-                    "remove_filler_words": False,
-                    "end_of_utterance_detection": {
-                        "model": "semantic_detection_v1",
-                        "threshold": 0.1,
-                        "timeout": 4,
-                    },
-                },
-                "input_audio_noise_reduction": {"type": "azure_deep_noise_suppression"},
-                "input_audio_echo_cancellation": {"type": "server_echo_cancellation"},
-                "voice": {
-                    "name": "en-US-Aria:DragonHDLatestNeural",
-                    "type": "azure-standard",
-                    "temperature": 0.8,
-                },
-            }
+
+    def __repr__(self) -> str:
+        return f"AgentVoice(agent_id={self.agent_id}, project_name={self.project_name})"
+
+    async def connect(self) -> None:
+        client = AsyncAzureVoiceLive(
+            azure_endpoint = self.endpoint,
+            # api_key = self.api_key,
+            azure_ad_token_credential=DefaultAzureCredential(),
+            foundry_credential=DefaultAzureCredential(),
+            project_name = self.project_name,
+            agent_id = self.agent_id,
         )
 
-        send_task = asyncio.create_task(listen_and_send_audio(connection))
-        receive_task = asyncio.create_task(receive_audio_and_playback(connection))
-        keyboard_task = asyncio.create_task(read_keyboard_and_quit())
+        async with client.connect(model = self.deployment) as connection:
+            await connection.session.update(
+                session={
+                    "turn_detection": {
+                        "create_response": True,
+                        "interrupt_response": True,
+                        "type": "azure_semantic_vad",
+                        "threshold": 0.5,
+                        "prefix_padding_ms": 400,
+                        "silence_duration_ms": 400,
+                        "remove_filler_words": True,
+                        "end_of_utterance_detection": {
+                            "model": "semantic_detection_v1",
+                            "threshold": 0.3,
+                            "timeout": 3,
+                        },
+                    },
+                    "input_audio_transcription": {"model": "azure-fast-transcription"},     
+                    "input_audio_noise_reduction": {"type": "azure_deep_noise_suppression"},
+                    "input_audio_echo_cancellation": {"type": "server_echo_cancellation"},
+                    "voice": {
+                        "name": "en-US-Aria:DragonHDLatestNeural",
+                        "type": "azure-standard",
+                        "temperature": 0.3,
+                    },      
+                    # "model": "gpt-4.1",
+                    "modalities": ["audio", "text"],
+                    "tool_choice": "auto",
+                    # "agent":{
+                    #     "type": "agent",
+                    #     "name": "test_research_agent",
+                    #     "description": "Research agent for testing purposes",
+                    #     "agent_id": agent_id,
+                    #     "thread_id": ""
+                    # }
+                }
+            )
 
-        print("Starting the chat ...")
-        await asyncio.wait([send_task, receive_task, keyboard_task], return_when=asyncio.FIRST_COMPLETED)
+            send_task = asyncio.create_task(listen_and_send_audio(connection))
+            receive_task = asyncio.create_task(receive_audio_and_playback(connection))
+            keyboard_task = asyncio.create_task(read_keyboard_and_quit())
 
-        send_task.cancel()
-        receive_task.cancel()
-    print("Chat done.")
+            print("Starting the chat ...")
+            await asyncio.wait([send_task, receive_task, keyboard_task], return_when=asyncio.FIRST_COMPLETED)
+
+            send_task.cancel()
+            receive_task.cancel()
+        print("Chat done.")
 
 if __name__ == "__main__":
     try:
         load_dotenv()
-        asyncio.run(main())
+        av = AgentVoice(agent_id="asst_bEgFu4ATuu5XvMjHBP3y85ac")
+        asyncio.run(av.connect())
     except Exception as e:
         print(f"Error: {e}")
         
