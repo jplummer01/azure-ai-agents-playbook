@@ -223,7 +223,8 @@ The available emails for you to use are:
 
 """,
             toolset=toolset
-        )    
+    )  
+          
     print(f"🤖 Created email agent: {agent.name}")
     print(f"🔧 Agent has email sending capabilities")
     print(f"🆔 Agent ID: {agent.id}")

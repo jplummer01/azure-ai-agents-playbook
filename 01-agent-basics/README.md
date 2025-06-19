@@ -137,63 +137,6 @@ pip install azure-ai-agents azure-identity semantic-kernel
 - Exception handling
 - Type annotations
 
-## 🚀 Quick Start Guide
-
-### Option 1: Foundry SDK (Recommended for beginners)
-```python
-from azure.ai.agents import AgentsClient
-from azure.identity import DefaultAzureCredential
-
-# Create client with context management
-with AgentsClient(
-    endpoint=os.environ["PROJECT_ENDPOINT"],
-    credential=DefaultAzureCredential()
-) as client:
-    # Create agent
-    agent = client.create_agent(
-        model=os.environ["MODEL_DEPLOYMENT_NAME"],
-        name="my-assistant",
-        instructions="You are a helpful assistant."
-    )
-    
-    # Have a conversation
-    run = client.create_thread_and_process_run(
-        agent_id=agent.id,
-        thread=AgentThreadCreationOptions(
-            messages=[ThreadMessageOptions(
-                role="user",
-                content="Hello! How can you help me today?"
-            )]
-        )
-    )
-```
-
-### Option 2: Semantic Kernel (Advanced capabilities)
-```python
-from semantic_kernel.agents import AzureAIAgent
-from azure.identity.aio import DefaultAzureCredential
-
-# Create agent with plugins
-async with DefaultAzureCredential() as creds:
-    client = AzureAIAgent.create_client(
-        credential=creds, 
-        endpoint=os.environ["PROJECT_ENDPOINT"]
-    )
-    
-    agent = AzureAIAgent(
-        client=client,
-        definition=await client.agents.create_agent(
-            model=os.environ["MODEL_DEPLOYMENT_NAME"],
-            name="my-assistant",
-            instructions="You are a helpful assistant."
-        ),
-        plugins=[MyCustomPlugin()]  # Add custom capabilities
-    )
-    
-    # Get response with automatic context management
-    response = await agent.get_response("Hello! How can you help me?")
-```
-
 ## 🏗️ What You'll Build
 
 By the end of these tutorials, you'll have built:
@@ -202,35 +145,6 @@ By the end of these tutorials, you'll have built:
 2. **Context-Aware Agents** - Agents that remember conversation history
 3. **Plugin-Enhanced Agents** - Agents with custom capabilities (math, weather, etc.)
 4. **Production-Ready Patterns** - Proper resource management and error handling
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-**Authentication Errors**
-```bash
-# Make sure you're logged into Azure CLI
-az login
-
-# Or set environment variables for service principal
-export AZURE_CLIENT_ID="your-client-id"
-export AZURE_CLIENT_SECRET="your-client-secret" 
-export AZURE_TENANT_ID="your-tenant-id"
-```
-
-**Model Not Found**
-- Verify your model deployment name is correct
-- Ensure the model is deployed and active in your Azure AI project
-- Check that you have sufficient quota for your model
-
-**Package Installation Issues**
-```bash
-# Update pip first
-pip install --upgrade pip
-
-# Install with verbose output to see any errors
-pip install -v azure-ai-agents semantic-kernel
-```
 
 ## 📖 Additional Resources
 
@@ -246,14 +160,6 @@ After completing these fundamental tutorials, explore:
 - **[02-agent-custom-functions](../02-agent-custom-functions/)** - Adding custom capabilities to your agents
 - **[03-orchestrated-agents](../03-orchestrated-agents/)** - Coordinating multiple agents
 - **[04-orchestrated-agents-with-tools](../04-orchestrated-agents-with-tools/)** - Integrating external tools and APIs
-
-## 💡 Tips for Success
-
-1. **Start Simple** - Begin with the basic Foundry SDK tutorial
-2. **Experiment** - Modify the examples to understand how they work
-3. **Use Context Managers** - Always use `with` statements for proper resource cleanup
-4. **Handle Errors** - Implement proper exception handling in your code
-5. **Monitor Usage** - Keep track of your Azure AI service consumption
 
 ---
 

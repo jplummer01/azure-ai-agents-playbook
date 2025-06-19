@@ -262,41 +262,7 @@ manager.enable_parallel_processing(True)
 - Implement state cleanup between runs
 - Use conversation summarization for long workflows
 
-## 📊 Best Practices
-
-### Design Principles
-- **Single Responsibility**: Each agent should have a clear, focused role
-- **Loose Coupling**: Minimize dependencies between agents
-- **Error Resilience**: Design for graceful failure handling
-- **Scalable Architecture**: Build systems that can grow
-
-### Performance Optimization
-- **Efficient Tool Usage**: Minimize API calls and token consumption
-- **Parallel Processing**: Execute independent tasks concurrently
-- **Caching Strategies**: Store and reuse intermediate results
-- **Resource Management**: Monitor and limit computational overhead
-
-### Production Considerations
-- **Monitoring and Logging**: Track agent performance and errors
-- **Quality Assurance**: Implement validation at each pipeline stage
-- **Security**: Secure API keys and sensitive data
-- **Cost Management**: Monitor token usage and API costs
-
-## 🔒 Security & Compliance
-
-### API Security
-- Store API keys in Azure Key Vault
-- Use managed identities where possible
-- Implement proper authentication and authorization
-- Monitor API usage and implement rate limiting
-
-### Data Privacy
-- Handle sensitive information appropriately
-- Implement data retention policies
-- Ensure compliance with privacy regulations
-- Use secure communication channels
-
-## 📈 Advanced Patterns
+##  Advanced Patterns
 
 ### Dynamic Orchestration
 ```python

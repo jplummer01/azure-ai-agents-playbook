@@ -374,7 +374,7 @@ class AgentVoice():
                         "remove_filler_words": True,
                         "end_of_utterance_detection": {
                             "model": "semantic_detection_v1",
-                            "threshold": 0.3,
+                            "threshold": 0.01,
                             "timeout": 3,
                         },
                     },

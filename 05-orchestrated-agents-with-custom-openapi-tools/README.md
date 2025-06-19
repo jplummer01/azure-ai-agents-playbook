@@ -83,6 +83,90 @@ python bank_transactions_api.py 8000
 jupyter notebook 05.1-fastapi_openapi_tutorial.ipynb
 ```
 
+## 🔧 Infrastructure Deployment with Azure Developer CLI
+
+The infrastructure for this project can be easily deployed using Azure Developer CLI (azd), which provides automated provisioning of all required Azure resources.
+
+### Prerequisites for azd Deployment
+- [Azure Developer CLI (azd)](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd) installed
+- Azure subscription with appropriate permissions
+- Docker installed (for container building)
+
+### Step-by-Step Deployment
+
+1. **Initialize the environment**
+   ```bash
+   # Navigate to the project folder
+   cd azure-ai-agents-playbook/05-orchestrated-agents-with-custom-openapi-tools
+   
+   # Initialize azd (if not already done)
+   azd init
+   ```
+
+2. **Deploy the infrastructure**
+   ```bash
+   # Deploy all Azure resources and the application
+   azd up
+   ```
+
+   This command will:
+   - Create a new resource group
+   - Deploy Azure Container Registry
+   - Set up Azure Container Apps Environment
+   - Deploy Log Analytics workspace for monitoring
+   - Create a user-assigned managed identity
+   - Build and deploy the FastAPI container
+   - Configure all necessary connections and permissions
+
+3. **Get deployment information**
+   ```bash
+   # Show all environment variables and endpoints
+   azd env get-values
+   
+   # Get the FastAPI service endpoint
+   azd env get-value FASTAPI_ENDPOINT
+   ```
+
+### What Gets Deployed
+
+The `azd up` command creates the following Azure resources:
+
+- **Azure Container Registry**: Stores the containerized FastAPI application
+- **Azure Container Apps Environment**: Managed Kubernetes environment for containers
+- **Azure Container App**: Hosts the FastAPI service with automatic scaling
+- **Log Analytics Workspace**: Centralized logging and monitoring
+- **User Assigned Managed Identity**: Secure authentication between services
+
+### Environment Variables After Deployment
+
+After successful deployment, you'll have access to:
+```bash
+# Core service endpoints
+FASTAPI_ENDPOINT="https://your-app.region.azurecontainerapps.io"
+API_BASE_URL="https://your-app.region.azurecontainerapps.io"
+
+# OpenAPI specification endpoint
+OPENAPI_SPEC_URL="https://your-app.region.azurecontainerapps.io/openapi.json"
+```
+
+### Testing the Deployed Service
+
+```bash
+# Test the deployed API
+curl https://your-app.region.azurecontainerapps.io/transactions
+
+# Get the OpenAPI specification
+curl https://your-app.region.azurecontainerapps.io/openapi.json
+```
+
+### Cleanup
+
+When you're finished with the tutorial:
+```bash
+# Remove all deployed resources
+azd down
+```
+
 ## 📋 Prerequisites
 
 ### Required Azure Resources
