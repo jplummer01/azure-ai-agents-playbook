@@ -18,7 +18,7 @@ Learn to create sophisticated AI agents using Azure AI services, from basic conv
 
 ### 🎤 **Advanced Capabilities**
 - **[07-voice-orchestration](07-voice-orchestration/)** - Voice-enabled agents with real-time audio processing
-- **[09-advanced-orchestrated-agents](09-advanced-orchestrated-agents/)** - Enterprise patterns and production systems *(Coming Soon)*
+- **[08-advanced-orchestrated-agents](08-advanced-orchestrated-agents/)** - Enterprise patterns and production systems *(Coming Soon)*
 
 ## 🚀 Getting Started
 
