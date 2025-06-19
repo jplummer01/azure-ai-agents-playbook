@@ -93,11 +93,18 @@ MODEL_DEPLOYMENT_NAME="gpt-4o"  # or your deployed model
 
 # Additional for tutorial 06.2 (Bing Search Research)
 AZURE_FOUNDRY_PROJECT_ENDPOINT="https://your-foundry-resource.services.ai.azure.com/api/projects/your-project-name"
-AZURE_GROUNDING_WITH_BING_RESOURCE_KEY="your-bing-search-api-key"
 
 # Note: Bing Search connection should be configured in Azure AI Studio
 # The tutorial will automatically discover available Bing Search connections
 ```
+
+### Configuration Steps of the Grounding with Bing Search Connection
+
+Please follow the below two links to properly configure the Grounding with Bing Search Connection in Azure AI Studio:
+
+- [Create a Grounding with Bing Search Connection](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/bing-grounding)
+- [Create a Grounding with Bing Search Connection in Azure AI Studio](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/bing-code-samples?pivots=portal)
+
 
 ### Required Python Packages
 ```bash
