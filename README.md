@@ -4,6 +4,10 @@
 
 Learn to create sophisticated AI agents using Azure AI services, from basic conversations to complex multi-agent orchestration systems with voice capabilities and external API integrations.
 
+
+> **Note:** Please check our **animated** Powerpoint presentation for an overview of the playbook: [Azure AI Agents Orchestration Playbook Presentation](./Azure%20AI%20Agent%20Orchestration.pptx)
+
+
 ## 📚 Tutorial Structure
 
 ### 🎯 **Foundational Concepts**
