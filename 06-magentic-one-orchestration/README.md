@@ -88,11 +88,12 @@ Configure your environment with the following variables in the `.env` file at th
 
 ```bash
 # Azure AI Configuration (Required for both tutorials)
-PROJECT_ENDPOINT="https://your-ai-project.openai.azure.com/"
+PROJECT_ENDPOINT="https://your-foundry-resource.services.ai.azure.com/api/projects/your-project-name"
 MODEL_DEPLOYMENT_NAME="gpt-4o"  # or your deployed model
 
 # Additional for tutorial 06.2 (Bing Search Research)
-AZURE_FOUNDRY_PROJECT_ENDPOINT="https://your-foundry-project.services.ai.azure.com/api/projects/your-project"
+AZURE_FOUNDRY_PROJECT_ENDPOINT="https://your-foundry-resource.services.ai.azure.com/api/projects/your-project-name"
+AZURE_GROUNDING_WITH_BING_RESOURCE_KEY="your-bing-search-api-key"
 
 # Note: Bing Search connection should be configured in Azure AI Studio
 # The tutorial will automatically discover available Bing Search connections
@@ -104,6 +105,7 @@ pip install azure-ai-agents
 pip install azure-identity
 pip install semantic-kernel
 pip install azure-ai-projects  # For Bing Search tutorial
+pip install python-dotenv
 ```
 
 ## 🚀 Quick Start

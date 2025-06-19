@@ -70,8 +70,15 @@ cd ../../  # Go to azure-ai-agents-playbook root
 The `.env` file should contain your Azure AI project details:
 ```properties
 # Required for all tutorials
-PROJECT_ENDPOINT="https://your-project.services.ai.azure.com/api/projects/your-project"
+PROJECT_ENDPOINT="https://your-foundry-resource.services.ai.azure.com/api/projects/your-project-name"
 MODEL_DEPLOYMENT_NAME="your-model-deployment-name"
+
+# For Semantic Kernel scenarios
+AZURE_OPENAI_API_KEY="your-azure-openai-api-key"
+AZURE_OPENAI_ENDPOINT="https://your-openai-resource.openai.azure.com/"
+AZURE_OPENAI_CHAT_DEPLOYMENT_NAME="your-chat-deployment"
+AZURE_OPENAI_DEPLOYMENT_NAME="your-deployment-name"
+AZURE_OPENAI_API_VERSION="2024-12-01-preview"
 
 # Optional: For advanced scenarios
 REASONING_MODEL_DEPLOYMENT_NAME="your-reasoning-model"
@@ -277,7 +284,7 @@ pip install -v azure-ai-agents semantic-kernel requests
 - [Azure AI Agents Functions Documentation](https://docs.microsoft.com/azure/ai-services/agents/functions/)
 - [Semantic Kernel Plugins Documentation](https://learn.microsoft.com/semantic-kernel/plugins/)
 - [Function Calling Best Practices](https://docs.microsoft.com/azure/ai-services/openai/function-calling/)
-- [Azure AI Foundry Documentation](https://docs.microsoft.com/azure/ai-services/foundry/)
+- [Azure AI Foundry Documentation](https://learn.microsoft.com/en-us/azure/ai-foundry/)
 
 ## 🎯 Next Steps
 

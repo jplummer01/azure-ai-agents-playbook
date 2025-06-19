@@ -1,432 +1,239 @@
-# Voice Orchestration
+# 🎤 Voice Orchestration - Voice-Enabled Azure AI Agents
 
-🎤 **Build Voice-Enabled AI Agents with Real-Time Audio Processing**
+Welcome to the exciting world of voice-controlled AI agents! This folder contains comprehensive tutorials that show you how to create sophisticated voice-enabled Azure AI Agents that can listen, understand, and respond to spoken commands while performing real-world actions through Azure services.
 
-This folder demonstrates how to create voice-controlled Azure AI Agents that can process speech input, understand natural language commands, and perform actions like sending emails through Azure Logic Apps. Learn to build conversational AI systems with real-time voice interaction capabilities.
+## 📚 What's In This Folder
 
-## 🎯 What You'll Learn
+### 🎤 [07.1 - Voice-Controlled Email Agent Demo](07.1-voice-email-demo.py)
+**Complete voice-enabled agent with email automation capabilities**
 
-- **Voice-Enabled Agents**: Create agents that respond to spoken commands
-- **Real-Time Audio Processing**: Handle live audio streams and speech recognition
-- **Azure Logic Apps Integration**: Connect voice agents to business workflows
-- **WebSocket Communication**: Implement real-time audio streaming
-- **Multi-Modal Interaction**: Combine voice, text, and action capabilities
-- **Production Voice Systems**: Build scalable voice-controlled applications
+Learn how to build production-ready voice agents:
+- 🔊 Real-time speech recognition and processing
+- 🎯 Natural language understanding from voice commands  
+- 📧 Email automation through Azure Logic Apps integration
+- 🗣️ Voice feedback with text-to-speech responses
+- 🌐 WebSocket-based audio streaming for low latency
+- 🛠️ Voice processing utilities and best practices
 
-## 🏗️ Architecture Overview
+**Perfect for**: Developers who want to add voice capabilities to their AI agents and build conversational systems that can take real actions.
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    Voice Orchestration System                   │
-└─────────────────────┬───────────────────────────────────────────┘
-                      │
-    ┌─────────────────┼─────────────────┬─────────────────┐
-    │                 │                 │                 │
-┌───▼────┐    ┌──────▼──────┐    ┌─────▼─────┐    ┌─────▼─────┐
-│ Audio  │    │   Speech    │    │   Azure   │    │ Logic     │
-│Capture │    │Recognition  │    │ AI Agent  │    │ Apps      │
-│        │    │             │    │           │    │           │
-└───┬────┘    └──────┬──────┘    └─────┬─────┘    └─────┬─────┘
-    │                │                 │                │
-┌───▼────┐    ┌──────▼──────┐    ┌─────▼─────┐    ┌─────▼─────┐
-│ Voice  │    │ WebSocket   │    │ Function  │    │  Email    │
-│ Utils  │    │  Stream     │    │   Tools   │    │ Service   │
-└────────┘    └─────────────┘    └───────────┘    └───────────┘
-```
+### 🔧 [Voice Processing Framework](voice.py)
+**Core voice processing utilities and AgentVoice class**
 
-## 📁 Project Structure
+Explore the sophisticated voice processing infrastructure:
+- 🎙️ AgentVoice class for complete voice interaction handling
+- 📡 WebSocket-based real-time audio streaming
+- 🧠 Azure Speech Services integration with advanced features
+- 🔇 Voice Activity Detection (VAD) for smart conversation flow
+- 🎛️ Audio preprocessing and noise suppression
+- ⚡ Async operations for responsive voice interactions
 
-```
-07-voice-orchestration/
-├── 07.1-voice-email-demo.py      # Voice-controlled email agent demo
-├── voice.py                      # Voice processing utilities and AgentVoice class
-├── requirements.txt              # Python dependencies for voice processing
-├── __pycache__/                  # Python cache files
-└── README.md                     # This file
-```
+**Perfect for**: Developers who want to understand the underlying voice processing architecture and build custom voice-enabled applications.
 
-## 📚 Components
+## 🎯 Learning Path
 
-### 07.1-voice-email-demo.py
-**🎤 Voice-Controlled Email Agent**
+We recommend exploring the components in this order:
 
-A complete demonstration of a voice-enabled agent that can:
-- **Listen to voice commands** using real-time audio capture
-- **Process speech** through Azure Speech Services
-- **Execute email tasks** via Azure Logic Apps integration
-- **Provide voice feedback** with text-to-speech responses
+1. **Start with voice.py** - Understand the voice processing framework and core utilities
+2. **Run 07.1-voice-email-demo.py** - Experience a complete voice-enabled agent in action
 
-**Key Features:**
-- Real-time voice command processing
-- Azure Logic Apps workflow integration
-- Email composition and sending via voice
-- Multi-modal interaction (voice + text)
-- Error handling and user feedback
+**Prerequisites**: Complete the [01-agent-basics](../01-agent-basics/), [02-agent-custom-functions](../02-agent-custom-functions/), and [04-orchestrated-agents-with-tools](../04-orchestrated-agents-with-tools/) tutorials to understand core agent concepts and Logic Apps integration.
 
-### voice.py
-**🔧 Voice Processing Framework**
+## � Prerequisites
 
-Core voice processing utilities including:
-- **AgentVoice Class**: Main voice interaction handler
-- **Audio Capture**: Real-time microphone input processing
-- **WebSocket Streaming**: Efficient audio data transmission
-- **Speech Recognition**: Azure Speech Services integration
-- **Voice Activity Detection**: Smart conversation flow management
+Before starting these tutorials, ensure you have:
 
-**Key Features:**
-- WebSocket-based audio streaming
-- Azure Deep Noise Suppression
-- Semantic Voice Activity Detection (VAD)
-- Audio preprocessing and optimization
-- Real-time conversation handling
+### Previous Knowledge
+- ✅ Completed [01-agent-basics](../01-agent-basics/) tutorials
+- ✅ Completed [02-agent-custom-functions](../02-agent-custom-functions/) tutorials  
+- ✅ Understanding of Azure Logic Apps from [04-orchestrated-agents-with-tools](../04-orchestrated-agents-with-tools/)
+- ✅ Basic knowledge of audio processing concepts
 
-## 🛠️ Prerequisites
+### Azure Resources
+- ✅ Azure subscription
+- ✅ Azure AI Foundry project
+- ✅ Deployed AI model (GPT-4, GPT-3.5-turbo, etc.)
+- ✅ Azure Speech Services resource
+- ✅ Azure Logic Apps (for email functionality)
 
-### Required Azure Resources
-- **Azure AI Project** with deployed language model
-- **Azure Speech Services** resource
-- **Azure Logic Apps** (for email functionality)
-- **Azure Subscription** with appropriate permissions
+### Environment Setup
+- ✅ Python 3.8+ installed
+- ✅ Microphone and speakers/headphones
+- ✅ Azure CLI (optional, for authentication)
 
 ### Environment Variables
-Configure your environment with the following variables:
+Configure your Azure AI services by filling in the `.env` file at the project root level:
 
 ```bash
-# Azure AI Configuration
-PROJECT_ENDPOINT="https://your-ai-project.openai.azure.com/"
-MODEL_DEPLOYMENT_NAME="gpt-4o"  # or your deployed model
-AZURE_OPENAI_API_KEY="your-api-key"
-AZURE_OPENAI_ENDPOINT="https://your-openai.openai.azure.com/"
+# Navigate to the project root and edit the .env file
+cd ../../  # Go to azure-ai-agents-playbook root
+# Edit .env file with your Azure AI configuration
+```
 
-# Azure Speech Services
-AZURE_SPEECH_KEY="your-speech-service-key"
-AZURE_SPEECH_REGION="your-speech-region"
+The `.env` file should contain your Azure AI project details:
+```properties
+# Required for voice orchestration
+PROJECT_ENDPOINT="https://your-foundry-resource.services.ai.azure.com/api/projects/your-project-name"
+MODEL_DEPLOYMENT_NAME="your-model-deployment-name"
+
+# Azure Speech Services (Required)
+AZURE_VOICE_LIVE_API_KEY="your-speech-service-key"
+AZURE_VOICE_LIVE_REGION="your-speech-region"
+AZURE_VOICE_LIVE_ENDPOINT="https://your-cognitive-services.cognitiveservices.azure.com/"
 
 # Azure Logic Apps (for email features)
 AZURE_SUBSCRIPTION_ID="your-subscription-id"
 AZURE_RESOURCE_GROUP_NAME="your-resource-group"
-LOGIC_APP_NAME="your-logic-app-name"
+
+# Optional: Additional Azure AI configuration
+AZURE_OPENAI_API_KEY="your-api-key"
+AZURE_OPENAI_ENDPOINT="https://your-openai-resource.openai.azure.com/"
 ```
 
-### Required Python Packages
+💡 **Tip**: The `.env` file is already present in the project root with example values. Simply update it with your Azure AI project details.
+
+### Required Packages
+Each tutorial will install its required packages, but you can install them all upfront:
+
 ```bash
-pip install azure-ai-agents
-pip install azure-identity
-pip install azure-mgmt-logic
-pip install numpy
-pip install sounddevice
-pip install websockets
-pip install asyncio
-pip install aiohttp
+pip install azure-ai-agents azure-identity azure-mgmt-logic numpy sounddevice websockets python-dotenv
 ```
 
 ### System Requirements
-- **Microphone**: Hardware microphone for audio input
-- **Speakers/Headphones**: Audio output for voice responses
-- **Windows/macOS/Linux**: Cross-platform audio support
-- **Python 3.8+**: Compatible Python version
+- **Audio Hardware**: Working microphone and speakers/headphones
+- **Network**: Stable internet connection for real-time audio streaming
+- **Platform**: Windows/macOS/Linux with audio device support
 
-## 🚀 Quick Start
+## � Key Concepts Covered
 
-### 1. Environment Setup
-```bash
-# Clone the repository
-git clone https://github.com/Azure-Samples/azure-ai-agents-playbook.git
-cd azure-ai-agents-playbook/07-voice-orchestration
+### 🎤 **Voice-Enabled AI Agents**
 
-# Install dependencies
-pip install -r requirements.txt
+**What voice capabilities enable:**
+- 🗣️ **Natural Interaction**: Speak to agents in natural language
+- 🔄 **Multi-Modal Communication**: Combine voice, text, and actions
+- ⚡ **Real-Time Processing**: Immediate voice command response
+- 🤖 **Hands-Free Operation**: Control agents without typing
+- 🎯 **Contextual Understanding**: Maintain conversation context across voice interactions
 
-# Set up environment variables (create .env file at project root)
-# Add all required environment variables listed above
-```
+### 🔧 **Voice Processing Architecture**
 
-### 2. Configure Azure Logic Apps (Optional)
-```bash
-# Create a Logic App for email functionality
-az logic workflow create \
-  --resource-group <your-rg> \
-  --name <logic-app-name> \
-  --location <region>
+#### Audio Capture and Processing
+- **Real-Time Streaming**: Continuous audio capture from microphone
+- **Quality Enhancement**: Noise suppression and audio optimization
+- **Buffer Management**: Efficient audio data handling for low latency
+- **Format Conversion**: Audio format standardization for processing
 
-# Configure email connector in Logic Apps
-# Set up HTTP trigger for agent integration
-```
+#### Speech Recognition Integration
+- **Azure Speech Services**: Enterprise-grade speech-to-text conversion
+- **WebSocket Streaming**: Low-latency real-time audio transmission
+- **Language Support**: Multi-language speech recognition capabilities
+- **Custom Models**: Domain-specific speech recognition optimization
 
-### 3. Run Voice-Enabled Email Agent
-```bash
-# Start the voice-controlled agent
-python 07.1-voice-email-demo.py
+#### Voice Activity Detection (VAD)
+- **Smart Listening**: Detect when user starts and stops speaking
+- **Conversation Flow**: Natural turn-taking in voice conversations
+- **Background Noise Filtering**: Ignore non-speech audio
+- **Timeout Management**: Handle pauses and silence appropriately
 
-# Speak commands like:
-# "Send an email to john@example.com about our meeting tomorrow"
-# "Check my recent emails"
-# "Schedule a follow-up email"
-```
+### 🏗️ **Integration Patterns**
 
-## 🧩 Learning Path
+#### Azure Services Integration
+- **Speech Services**: Real-time speech recognition and synthesis
+- **AI Agents**: Intelligent response generation and task execution
+- **Logic Apps**: Automated workflow triggered by voice commands
+- **Cognitive Services**: Enhanced audio processing capabilities
 
-### Beginner Level
-1. **Audio Basics**: Understand audio capture and processing fundamentals
-2. **Speech Recognition**: Learn Azure Speech Services integration
-3. **Simple Voice Commands**: Build basic voice-controlled functions
+#### Application Architecture
+- **Event-Driven Processing**: Respond to voice events asynchronously
+- **State Management**: Maintain conversation context across interactions
+- **Error Handling**: Graceful degradation for audio/recognition issues
+- **Security**: Secure audio transmission and data protection
+## 🚀 Quick Start Guide
 
-### Intermediate Level
-1. **Real-Time Processing**: Implement WebSocket-based audio streaming
-2. **Voice Activity Detection**: Add intelligent conversation flow
-3. **Multi-Modal Integration**: Combine voice with other input methods
-
-### Advanced Level
-1. **Production Voice Systems**: Build scalable voice applications
-2. **Custom Voice Models**: Train specialized speech recognition
-3. **Enterprise Integration**: Connect to complex business workflows
-
-## 💡 Key Concepts
-
-### Voice Processing Pipeline
-1. **Audio Capture**: Real-time microphone input
-2. **Preprocessing**: Noise reduction and audio optimization
-3. **Speech Recognition**: Convert speech to text
-4. **Natural Language Processing**: Extract intent and entities
-5. **Action Execution**: Perform requested tasks
-6. **Voice Response**: Generate and speak responses
-
-### Real-Time Audio Streaming
-- **WebSocket Communication**: Low-latency audio transmission
-- **Buffer Management**: Efficient audio data handling
-- **Stream Processing**: Real-time audio analysis
-- **Quality Control**: Audio quality monitoring and adjustment
-
-### Azure Speech Services Integration
-- **Speech-to-Text**: High-accuracy speech recognition
-- **Text-to-Speech**: Natural voice synthesis
-- **Voice Customization**: Custom voice models and styles
-- **Language Support**: Multi-language voice processing
-
-## 🔧 Advanced Configuration
-
-### Custom Voice Settings
+### Option 1: Voice-Controlled Email Agent (Complete Example)
 ```python
-# Configure voice processing parameters
-voice_config = {
-    "sample_rate": 24000,
-    "channels": 1,
-    "bit_depth": 16,
-    "buffer_size": 1024,
-    "noise_suppression": True,
-    "echo_cancellation": True
-}
+from voice import AgentVoice
+import os
+
+# Initialize voice-enabled agent
+voice_agent = AgentVoice(
+    endpoint=os.environ["PROJECT_ENDPOINT"],
+    model=os.environ["MODEL_DEPLOYMENT_NAME"]
+)
+
+# Start listening for voice commands
+voice_agent.start_listening()
+# Say: "Send an email to john@example.com about our meeting"
 ```
 
-### Speech Recognition Optimization
+### Option 2: Custom Voice Processing (Framework Usage)
 ```python
-# Advanced speech recognition settings
-speech_config = {
-    "language": "en-US",
-    "profanity_filter": True,
-    "continuous_recognition": True,
-    "interim_results": True,
-    "timeout": 30000  # 30 seconds
-}
-```
+from azure.ai.agents import AgentsClient
+from voice import AgentVoice
+from azure.identity import DefaultAzureCredential
 
-### Logic Apps Integration
-```python
-# Configure email workflow
-email_workflow = {
-    "trigger_url": "https://your-logic-app-url",
-    "authentication": "managed_identity",
-    "timeout": 60,
-    "retry_policy": {
-        "type": "exponential",
-        "count": 3
-    }
-}
-```
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**Audio Device Problems**
-```bash
-# List available audio devices
-python -c "import sounddevice as sd; print(sd.query_devices())"
-
-# Test microphone functionality
-python -c "import sounddevice as sd; import numpy as np; print('Recording...'); sd.rec(int(1 * 16000), samplerate=16000, channels=1)"
-```
-
-**WebSocket Connection Issues**
-```bash
-# Check network connectivity
-ping your-speech-endpoint.cognitiveservices.azure.com
-
-# Verify authentication
-az account show
-az cognitiveservices account keys list --name <speech-resource>
-```
-
-**Speech Recognition Accuracy**
-```bash
-# Optimize audio quality
-# - Use a high-quality microphone
-# - Minimize background noise
-# - Speak clearly and at appropriate volume
-# - Adjust microphone positioning
-
-# Check speech service quota
-az cognitiveservices account show --name <speech-resource> --query "sku"
-```
-
-### Performance Optimization
-
-**Audio Latency Reduction**
-- Use smaller buffer sizes for real-time processing
-- Optimize WebSocket connection parameters
-- Implement audio preprocessing on the client side
-- Use dedicated audio processing threads
-
-**Recognition Accuracy Improvement**
-- Implement custom language models
-- Use acoustic adaptation for specific environments
-- Add domain-specific vocabulary
-- Implement confidence score filtering
-
-## 📊 Best Practices
-
-### Audio Processing
-- **Quality First**: Use high-quality audio hardware
-- **Noise Management**: Implement noise suppression and filtering
-- **Buffer Optimization**: Balance latency and stability
-- **Error Handling**: Graceful degradation for audio issues
-
-### Voice User Experience
-- **Clear Prompts**: Provide clear voice command guidance
-- **Feedback**: Give immediate audio/visual confirmation
-- **Error Recovery**: Handle misunderstood commands gracefully
-- **Accessibility**: Support various speaking styles and accents
-
-### Production Deployment
-- **Scalability**: Design for multiple concurrent users
-- **Monitoring**: Track audio quality and recognition accuracy
-- **Security**: Secure audio data transmission and storage
-- **Compliance**: Ensure privacy and data protection compliance
-
-## 🔒 Security & Privacy
-
-### Audio Data Protection
-- **Encryption**: Encrypt audio streams during transmission
-- **Minimal Storage**: Avoid storing unnecessary audio data
-- **Access Control**: Implement proper authentication
-- **Audit Logging**: Track audio processing activities
-
-### Privacy Compliance
-- **Consent Management**: Obtain proper user consent
-- **Data Retention**: Implement appropriate retention policies
-- **Regional Compliance**: Follow local privacy regulations
-- **Anonymization**: Remove personally identifiable information
-
-## 📈 Advanced Patterns
-
-### Multi-Language Support
-```python
-# Dynamic language switching
-class MultiLanguageVoiceAgent:
-    def __init__(self):
-        self.supported_languages = ["en-US", "es-ES", "fr-FR", "de-DE"]
-        self.current_language = "en-US"
+# Create voice-enabled agent with custom logic
+with AgentsClient(
+    endpoint=os.environ["PROJECT_ENDPOINT"],
+    credential=DefaultAzureCredential()
+) as client:
+    agent = client.create_agent(
+        model=os.environ["MODEL_DEPLOYMENT_NAME"],
+        name="voice-assistant"
+    )
     
-    def switch_language(self, language_code):
-        if language_code in self.supported_languages:
-            self.current_language = language_code
-            self.update_speech_config()
+    # Add voice capabilities
+    voice_handler = AgentVoice(agent=agent)
+    voice_handler.enable_voice_commands()
 ```
 
-### Custom Wake Word Detection
-```python
-# Implement custom wake word functionality
-class WakeWordDetector:
-    def __init__(self, wake_words=["hey assistant", "voice agent"]):
-        self.wake_words = wake_words
-        self.is_listening = False
-    
-    def detect_wake_word(self, audio_chunk):
-        # Custom wake word detection logic
-        pass
-```
+## 🏗️ What You'll Build
 
-### Voice Analytics
-```python
-# Track voice interaction metrics
-class VoiceAnalytics:
-    def track_interaction(self, command, success, latency):
-        metrics = {
-            "command_type": self.classify_command(command),
-            "success_rate": success,
-            "response_latency": latency,
-            "audio_quality": self.assess_audio_quality()
-        }
-        self.log_metrics(metrics)
-```
+By the end of these tutorials, you'll have built:
 
-## 🔗 Integration Examples
+### 🎤 **Voice-Controlled Email Agent**
+- Complete voice interaction system with speech recognition
+- Email automation through Azure Logic Apps
+- Natural language command processing
+- Voice feedback and confirmation system
 
-### Email Automation
-```python
-# Voice-controlled email sending
-voice_agent.listen_for_command(
-    patterns=["send email to *", "email * about *"],
-    action=send_email_via_logic_apps
-)
-```
+### � **Voice Processing Framework**  
+- Reusable AgentVoice class for any voice-enabled application
+- WebSocket-based real-time audio streaming
+- Advanced voice activity detection and conversation management
+- Integration patterns for Azure Speech Services
 
-### Calendar Management
-```python
-# Voice-controlled calendar operations
-voice_agent.listen_for_command(
-    patterns=["schedule meeting *", "check calendar for *"],
-    action=manage_calendar_events
-)
-```
+### 💡 **Production-Ready Patterns**
+- Error handling and graceful degradation
+- Audio quality optimization and noise suppression  
+- Secure voice data transmission and processing
+- Scalable voice agent architectures
 
-### Task Management
-```python
-# Voice-controlled task creation
-voice_agent.listen_for_command(
-    patterns=["create task *", "add to my todo list *"],
-    action=create_task_item
-)
-```
+## 🎯 Voice Agent Capabilities
 
-## 📚 Additional Resources
+**Example voice commands your agents will understand:**
+- 📧 *"Send an email to sarah@company.com about the quarterly review"*
+- � *"Schedule a meeting with the team for next Tuesday"*  
+- 📊 *"Generate a report on last month's sales data"*
+- 🔍 *"Search for documents related to the new product launch"*
+- ⚙️ *"Update my task list with the items we discussed"*
 
-### Documentation
-- [Azure Speech Services](https://docs.microsoft.com/azure/cognitive-services/speech-service/)
-- [Azure Logic Apps](https://docs.microsoft.com/azure/logic-apps/)
-- [WebSocket API Reference](https://docs.microsoft.com/azure/cognitive-services/speech-service/websockets)
-- [Audio Processing Best Practices](https://docs.microsoft.com/azure/cognitive-services/speech-service/how-to-audio-content-creation)
+## 🛠️ Advanced Voice Features
 
-### Libraries & Tools
-- [SoundDevice Documentation](https://python-sounddevice.readthedocs.io/)
-- [WebSockets Library](https://websockets.readthedocs.io/)
-- [Azure SDK for Python](https://docs.microsoft.com/python/api/overview/azure/)
+### Real-Time Audio Processing
+- Low-latency WebSocket streaming for immediate response
+- Continuous audio capture with intelligent buffering
+- Background noise suppression and audio enhancement
+- Multi-channel audio support for complex environments
 
-### Community & Support
-- [Azure Speech Community](https://techcommunity.microsoft.com/t5/azure-ai/ct-p/AzureAI)
-- [Python Audio Processing](https://github.com/topics/audio-processing)
-- [Voice UI Design Guidelines](https://docs.microsoft.com/azure/cognitive-services/speech-service/voice-assistants)
+### Intelligent Conversation Management  
+- Voice Activity Detection (VAD) for natural turn-taking
+- Context retention across multi-turn voice conversations
+- Interruption handling and conversation recovery
+- Timeout management for natural conversation flow
 
-## 🚀 Next Steps
-
-After mastering voice orchestration, explore:
-
-1. **Multi-Modal Agents**: Combine voice with vision and text
-2. **Custom Speech Models**: Train domain-specific recognition
-3. **Voice Analytics**: Implement conversation analytics
-4. **Enterprise Voice Systems**: Build large-scale voice applications
-5. **Conversational AI**: Advanced dialog management systems
-
----
-
-**Ready to give your agents a voice?** 🎤🤖
+### Enterprise Integration Patterns
+- Azure Logic Apps automation triggered by voice
+- Multi-modal interfaces combining voice, text, and visual
+- Custom speech models for domain-specific terminology
+- Voice authentication and speaker identification

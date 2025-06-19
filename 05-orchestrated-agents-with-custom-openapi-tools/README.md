@@ -95,7 +95,7 @@ jupyter notebook 05.1-fastapi_openapi_tutorial.ipynb
 Set these environment variables before running the tutorial:
 
 ```bash
-export PROJECT_ENDPOINT="https://your-ai-project.openai.azure.com/"
+export PROJECT_ENDPOINT="https://your-foundry-resource.services.ai.azure.com/api/projects/your-project-name"
 export MODEL_DEPLOYMENT_NAME="gpt-4o"  # or your deployed model name
 ```
 
@@ -107,6 +107,7 @@ semantic-kernel
 fastapi
 uvicorn
 requests
+python-dotenv
 ```
 
 ## 🛠️ Features

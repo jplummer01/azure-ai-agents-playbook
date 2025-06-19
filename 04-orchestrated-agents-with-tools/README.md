@@ -76,6 +76,56 @@ Before starting these tutorials, ensure you have:
 - ✅ Azure CLI (recommended for authentication)
 - ✅ Network access to external APIs (Frankfurter, etc.)
 
+
+### Set up the Logic App on Azure
+
+Please follow the [documentation](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/logic-apps?pivots=portal) link. The final Logic App should look like this:
+
+![logic-app](./images/logic-app.png)
+
+When creating the trigger, please copy and paste the below in the "Request Body JSON Schema" field:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "to": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    }
+  }
+}
+```
+
+The trigger step should look like this:
+
+![logic-app-trigger](./images/logic-app-trigger.png)
+
+
+When creating the second step `Send an email (V2)`, please fill in the required fields as shown below:
+
+![logic-app-send-email](./images/send-email.png)
+
+The `to`, `subject`, and `body` fields will be available to populate from the previous step, which is the trigger. The `to` field will be used to send the email to the user, and the `subject` and `body` fields will be used to populate the email subject and body respectively. To add these fields, right-click on the "To*" field for example, then click on the blue lightning icon, and then select the proper value from the list of available fields. The final step should look like this:
+
+![lightning](./images/lightning.png)
+
+Please note that the `Send an email (V2)` action in the Logic App requires a valid email address to send notifications, and the user has to **manually** go through authentication in the Azure Portal when adding this Step to the workflow. You can use your own email address or create a test email account for this purpose.
+
+The final details in the Jupyter notebook will look like this (or similar):
+
+```python 
+# Logic App details
+logic_app_name = "agent-logic-apps" # Resource name of the Logic App in Azure
+trigger_name = "When_a_HTTP_request_is_received" # Trigger name for the Logic App
+```
+
+
 ### Environment Variables
 Configure your Azure AI services by filling in the `.env` file at the project root level:
 
@@ -88,13 +138,15 @@ cd ../../  # Go to azure-ai-agents-playbook root
 The `.env` file should contain your Azure AI project details:
 ```properties
 # Required for all tutorials
-PROJECT_ENDPOINT="https://your-project.services.ai.azure.com/api/projects/your-project"
+PROJECT_ENDPOINT="https://your-foundry-resource.services.ai.azure.com/api/projects/your-project-name"
 MODEL_DEPLOYMENT_NAME="your-model-deployment-name"
 
 # Required for Semantic Kernel scenarios (04.1, 04.2)
-AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com/"
-AZURE_OPENAI_API_KEY="your-openai-api-key"
+AZURE_OPENAI_API_KEY="your-azure-openai-api-key"
+AZURE_OPENAI_ENDPOINT="https://your-openai-resource.openai.azure.com/"
 AZURE_OPENAI_CHAT_DEPLOYMENT_NAME="your-chat-deployment"
+AZURE_OPENAI_DEPLOYMENT_NAME="your-deployment-name"
+AZURE_OPENAI_API_VERSION="2024-12-01-preview"
 
 # Required for Logic Apps integration (04.3)
 AZURE_SUBSCRIPTION_ID="your-subscription-id"
@@ -110,7 +162,7 @@ REASONING_MODEL_DEPLOYMENT_NAME="your-reasoning-model"
 Each tutorial will install its required packages, but you can install them all upfront:
 
 ```bash
-pip install azure-ai-agents azure-identity semantic-kernel azure-mgmt-logic requests
+pip install azure-ai-agents azure-identity semantic-kernel azure-mgmt-logic requests python-dotenv
 ```
 
 ## 🔑 Key Concepts Covered

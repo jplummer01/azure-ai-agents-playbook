@@ -6,7 +6,7 @@
       "value":  "${AZURE_ENVIRONMENT_NAME=agentfastapi}"
     },
     "rgName": {
-      "value":  "${AZURE_RESOURCE_GROUP=agents-fast-api-v1}"
+      "value":  "${AZURE_RESOURCE_GROUP=agents-fast-api-05-v1}"
     },
     "location": {
       "value": "${AZURE_RG_LOCATION=swedencentral}"

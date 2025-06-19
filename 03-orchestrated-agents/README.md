@@ -72,13 +72,15 @@ cd ../../  # Go to azure-ai-agents-playbook root
 The `.env` file should contain your Azure AI project details:
 ```properties
 # Required for all tutorials
-PROJECT_ENDPOINT="https://your-project.services.ai.azure.com/api/projects/your-project"
+PROJECT_ENDPOINT="https://your-foundry-resource.services.ai.azure.com/api/projects/your-project-name"
 MODEL_DEPLOYMENT_NAME="your-model-deployment-name"
 
 # Required for Semantic Kernel orchestration (03.1)
-AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com/"
-AZURE_OPENAI_API_KEY="your-openai-api-key"
+AZURE_OPENAI_API_KEY="your-azure-openai-api-key"
+AZURE_OPENAI_ENDPOINT="https://your-openai-resource.openai.azure.com/"
 AZURE_OPENAI_CHAT_DEPLOYMENT_NAME="your-chat-deployment"
+AZURE_OPENAI_DEPLOYMENT_NAME="your-deployment-name"
+AZURE_OPENAI_API_VERSION="2024-12-01-preview"
 
 # Optional: For advanced scenarios
 REASONING_MODEL_DEPLOYMENT_NAME="your-reasoning-model"
@@ -91,7 +93,7 @@ AZURE_SUBSCRIPTION_ID="your-subscription-id"
 Each tutorial will install its required packages, but you can install them all upfront:
 
 ```bash
-pip install azure-ai-agents azure-identity semantic-kernel asyncio
+pip install azure-ai-agents azure-identity semantic-kernel python-dotenv
 ```
 
 ## 🔑 Key Concepts Covered
@@ -313,7 +315,7 @@ az cognitiveservices account show --name your-openai-resource --resource-group y
 - [Semantic Kernel Orchestration Documentation](https://learn.microsoft.com/semantic-kernel/agents/)
 - [Azure AI Agents Connected Tools Documentation](https://docs.microsoft.com/azure/ai-services/agents/tools/)
 - [Multi-Agent Systems Design Patterns](https://docs.microsoft.com/azure/ai-services/patterns/)
-- [Azure AI Foundry Orchestration Guide](https://docs.microsoft.com/azure/ai-services/foundry/)
+- [Azure AI Foundry Orchestration Guide](https://learn.microsoft.com/en-us/azure/ai-foundry/)
 
 ## 🎯 Next Steps
 
